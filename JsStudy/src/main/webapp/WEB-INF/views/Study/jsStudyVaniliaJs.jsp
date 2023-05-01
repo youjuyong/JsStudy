@@ -136,7 +136,103 @@ $(document).ready(function(){
 		// document.domain : document 서버의 도메인 이름을 반환한다.
 		// document.embeds : 모든 <embed> 요소를 반환한다.
 		// document.forms : 모든 <form>요소를 반환
+	  /*
+		document.anchors 컬렉션
+		anchors는 name 특성에 있는 모든 a 요소모음을 반환한다. 
+		컬렉션의 요소는 소스코드에 나타나는 순서대로 정렬된다. 
+		
+		속성/ 메서드                             설명
+		length 							컬렉션에 있는 <a> 요소의 수를 반환한다.
+		[index]						인덱스 값(0에서 시작)을 사용하여 컬렉션의 <a> 요소를 반환한다.
+		item(index)					인덱스 값(0에서 시작)을 사용하여 컬렉션의 <a> 요소를 반환 한다.
+		nameditem(id) 				지정된 id를 가진 컬렉션 <a>요소를 반환한다.
+	  */
+	  
+	  let anchorsBtn = document.getElementById("anchorBtn");
+	  anchorsBtn.addEventListener("click", function() {
+		  let anchorsLength = document.anchors.length;
+		  document.getElementById("demo1").innerHTML = "anchors.length" + anchorsLength ;
+		  
+		  let anchorsIndex = document.anchors[0].innerHTML;
+		  document.getElementById("demo2").innerHTML = "anchors.index" + anchorsIndex;
+		  
+		  let anchorsInnerHtml = document.anchors.namedItem("ancMeth").innerHTML;
+		  document.getElementById("demo3").innerHTML = anchorsInnerHtml;
+	  });
+	  
+	/*  2) 자바 스크립트 HTML DOM 이벤트
+	 onload와 onunload이벤트
+	 
+	 onload와 onunload 이벤트는 사용자가 페이지를 열거나 닫을때 발생한다.  
+	 
+	 onchange 이벤트
+	 
+	 onchange 이벤트는 요소의 값이 바뀌면 발생하는 이벤트이다. onchange이벤트는 종종 입력 필드의 유효성 검사
+	 와 함께 사용된다.
+	*/
+	
+	// onchange 예제 input 태그에 소문자가 입력시 대문자로 변경
+	let onchangeTest = document.getElementById("frame");
+	onchangeTest.onchange = () => {
+		onchangeTest.value = onchangeTest.value.toUpperCase();
+	}
+	
+	// onchange 예제 (물건품목/ 수량) 선택해서 계산
+	let itemTest = document.getElementById("item");
+	let countTest = document.getElementById("count");
+	itemTest.onchange = () => {
+		selectChange(itemTest,countTest);
+	}
+	
+	countTest.onchange = () => {
+		selectChange(itemTest,countTest);
+	}
+	
+	// onmouseover/onmousout 이벤트
+	let mouseOverOutTest = document.getElementById("mouseOverOut");
+	mouseOverOutTest.onmouseover = () => {
+		mouseOverOutTest.innerHTML = "Thank you";
+	}
+	
+	mouseOverOutTest.onmouseout = () => {
+		mouseOverOutTest.innerHTML = "Mouse over Me";
+	}
+	
+	// onmousedown,onmouseup,onclick 이벤트
+	let mouseDownUpClickTest = document.getElementById("onmouseClick");
+	mouseDownUpClickTest.onmouseup = () => {
+		mouseDownUpClickTest.style.backgroundColor = "#D94A38";
+		mouseDownUpClickTest.innerHTML = "mouseup";
+	}
+	
+	mouseDownUpClickTest.onmousedown = () => {
+		mouseDownUpClickTest.style.backgroundColor = "#lec5e5";
+		mouseDownUpClickTest.innerHTML = "mousedown";
+	}
+	
+	// onfocus, onblur 이벤트
+	let mouseonFocus = document.getElementById("mouseonfocusonblur");
+	mouseonFocus.onfocus = () => {
+		mouseonFocus.style.backgroundColor = "red";
+	}
+	
+	mouseonFocus.onblur = () => {
+		mouseonFocus.style.backgroundColor = "blue";
+	}
+	
+
 });
+
+function selectChange(item,count) {
+	let itemValue = item.value;
+	let countValue = count.value;
+	
+	if(itemValue && countValue) {
+		let res = itemValue * countValue;
+		document.getElementById("price").innerHTML = res.toLocaleString("ko-KR",{style:"currency",currency:"KRW"});
+	}
+}
+
 </script>
 </head>
 <body>
@@ -175,11 +271,44 @@ $(document).ready(function(){
 	<p>Append an item to the end of the list.</p>
 	<button id="appendChildBtn">append Try it</button>
 	<br>
+	
 	<h1>replace Child</h1>
 	<ul id="myList2"><li>Coffee</li><li>Tea</li><li>Milk</li></ul>
 	<p>Append an item to the end of the list.</p>
-	<button id="replaceChildBtn">replace child Try it</button>
+	<button id="replaceChildBtn">replace child Try it</button><br>
+	
+	<a name="html">HTML Tutorial</a><br>
+	<a name="css">CSS Tutorial</a><br>
+	<a name="xml">XML Tutorial</a><br>
+	<a name="ancMeth" href="http:www.naver.com">anchor Tutorial</a>
+	
+	<button id="anchorBtn">anchors 버튼</button>
+	<p id="demo1"></p>
+	<p id="demo2"></p>
+	<p id="demo3"></p>
+	
+	Enter your name : <input type="text" id="frame">
+	<p>transforms the input text to upper case.</p>
+	
+	<br><br>
+	<select name="item" id="item">
+		<option value="">품목</option>
+		<option value="1000">오이</option>
+		<option value="3000">호박</option>
+	</select>
+	
+	<select name="count" id="count">
+		<option value="">수량</option>
+		<option value="1">1개</option>
+		<option value="2">2개</option>
+		<option value="3">3개</option>
+	</select>
+	<div>가격 <span id="price"></span></div>
+	<br>
+	<div id="mouseOverOut">First Display.</div>
+	<br>
+	<div id="onmouseClick" style="background-color:#D94A38;width:90px;height:20px;padding:40px;">Click me</div>
 
-
+	Enter your name : <input type="text" id="mouseonfocusonblur">
 </body>
 </html>
